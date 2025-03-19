@@ -5,6 +5,9 @@ import { useParams } from "react-router-dom"
 //import del componente ReviewCard
 import ReviewCard from "../components/ReviewCard"
 
+//import componente ReviewForm
+import ReviewForm from "../components/ReviewForm"
+
 export default function Movie(){
     //Estrazione dell'informazione dall'url del sito
     //http:localhost:3000/movies/:id
@@ -38,6 +41,12 @@ export default function Movie(){
                 <h4>Our community reviews</h4>
                     {renderReviews()}
             </section>
+
+             {/* //form review */}
+             <section>
+                {movie?.id  && <ReviewForm movie_id={movie.id} reloadReviews={fetchMovie} />}
+             </section>
+             
         </>
     )
     
