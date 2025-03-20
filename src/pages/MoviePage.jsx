@@ -1,6 +1,9 @@
 import axios from "axios"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useContext} from "react"
 import { useParams } from "react-router-dom"
+
+//Import del GlobalContext
+import GlobalContext from "../contexts/GlobalContext";
 
 //import del componente ReviewCard
 import ReviewCard from "../components/ReviewCard"
@@ -16,12 +19,18 @@ export default function Movie(){
     //Creazione della variabile reattiva
     const [movie, setMovie] = useState({});
 
+    const {setIsLoading} = useContext(GlobalContext)
+
     //Chiamata fetch per la Show
     const fetchMovie = () => {
+
+        setIsLoading(true)
+
         axios
         .get(`http://localhost:3000/movies/${id}`)
         .then((res)=>setMovie(res.data))
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .then (()=> setIsLoading(false));
     }
 
     //Invocazione chiamata al caricamento del componente in pagina

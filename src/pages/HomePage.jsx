@@ -1,12 +1,20 @@
 import MovieCard from "../components/MovieCard";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+
+//Import del GlobalContext
+import GlobalContext from "../contexts/GlobalContext";
 
 export default function HomePage(){
     const[movies, setMovies] = useState([]);
 
+    const {setIsLoading} = useContext(GlobalContext)
+
     //funzione fetch per i film
     const fetchMovies = () => {
+
+        setIsLoading(true)
+
         axios
         .get("http://localhost:3000/movies")
         .then ((res) =>{
@@ -14,7 +22,8 @@ export default function HomePage(){
         })
         .catch((error) => {
             console.log(error);
-          });
+          })
+        .then (()=> setIsLoading(false))
     }
 
     //funzione per rendering delle card dei libri nell'html
